@@ -20,5 +20,9 @@
   "bugs": {
     "url": "https://github.com/pixelprodotco/react-validated-form/issues"
   },
-  "homepage": "https://github.com/pixelprodotco/react-validated-form#readme"
+  "homepage": "https://github.com/pixelprodotco/react-validated-form#readme",
+  "devDependencies": {
+    "prop-types": "^15.6.1",
+    "react": "^16.3.1"
+  }
 }
