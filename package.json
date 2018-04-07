@@ -1,0 +1,24 @@
+{
+  "name": "@pixelprodotco/react-validated-form",
+  "version": "0.0.1",
+  "description": "Form validation components for reactjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pixelprodotco/react-validated-form.git"
+  },
+  "keywords": [
+    "react",
+    "forms",
+    "validation"
+  ],
+  "author": "james leclair <james@pixelpro.co>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pixelprodotco/react-validated-form/issues"
+  },
+  "homepage": "https://github.com/pixelprodotco/react-validated-form#readme"
+}
