@@ -1,25 +1,25 @@
 import { storiesOf } from '@storybook/react'
 import React from 'react'
-import ValidatedForm from '../ValidatedForm'
-import ValidatedFormField from '../ValidatedFormField'
-import ValidatedFormTrigger from '../ValidatedFormTrigger'
+import Form from '../Form'
+import FormField from '../FormField'
+import FormSubmit from '../FormSubmit'
 
 function listFormFields (formData) {
   console.log(formData)
 }
 
 const TestValidatedForm = () =>
-  <ValidatedForm name='testform' onSubmit={listFormFields}>
+  <Form name='testform' onSubmit={listFormFields}>
     <div>
       <div>
-        <ValidatedFormField name='firstName' type='text' />
-        <ValidatedFormField name='lastName' type='text' />
+        <FormField name='firstName' type='text' />
+        <FormField name='lastName' type='text' />
       </div>
-      <ValidatedFormTrigger>
+      <FormSubmit>
         <button>submit</button>
-      </ValidatedFormTrigger>
+      </FormSubmit>
     </div>
-  </ValidatedForm>
+  </Form>
 
 storiesOf('main', module)
   .add('Default', () => <TestValidatedForm />)
