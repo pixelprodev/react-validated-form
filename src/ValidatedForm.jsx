@@ -13,14 +13,14 @@ class ValidatedForm extends Component {
     this.validateAndSubmit = this.validateAndSubmit.bind(this)
   }
 
-  registerField ({fieldName, validator}) {
-    if (!this.registeredFields.has(fieldName)) {
-      this._registeredFields.set(fieldName, validator)
+  registerField ({name, validator}) {
+    if (!this.registeredFields.has(name)) {
+      this._registeredFields.set(name, validator)
     }
   }
 
-  unregisterField ({fieldName}) {
-    this._registeredFields.delete(fieldName)
+  unregisterField ({name}) {
+    this._registeredFields.delete(name)
   }
 
   validateAndSubmit () {
@@ -45,7 +45,7 @@ class ValidatedForm extends Component {
   }
 }
 
-ValidatedForm.PropTypes = {
+ValidatedForm.propTypes = {
   name: PropTypes.string.isRequired,
   onSubmit: PropTypes.func.isRequired
 }
