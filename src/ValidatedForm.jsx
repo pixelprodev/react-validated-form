@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 import ContextManager from './ContextManager'
 import ErrFormFieldsInvalid from './ErrFormFieldsInvalid'
 
-class ValidatedForm extends Component {
+class ValidatedForm extends React.Component {
   constructor ({name}) {
     super()
     this._registeredFields = new Map()
@@ -16,7 +16,7 @@ class ValidatedForm extends Component {
       unregisterField: this.unregisterField.bind(this),
       validateAndSubmit: this.validateAndSubmit.bind(this)
     }
-    this._context = ContextManager.getContext({name, ...contextMethods, source: 'formitself'})
+    ContextManager.setContext({name, ...contextMethods})
   }
 
   registerField ({name, validator, getValue}) {
@@ -39,13 +39,7 @@ class ValidatedForm extends Component {
     this.props.onSubmit(aggregatedValues)
   }
 
-  render () {
-    return (
-      <this._context.Provider>
-        {this.props.children}
-      </this._context.Provider>
-    )
-  }
+  render () { return this.props.children }
 }
 
 ValidatedForm.propTypes = {

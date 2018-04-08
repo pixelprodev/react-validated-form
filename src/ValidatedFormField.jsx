@@ -5,14 +5,10 @@ import PropTypes from 'prop-types'
 class ValidatedFormField extends Component {
   componentWillMount () {
     const { formName } = this.props
-    this._context = ContextManager.getContext({name: formName, source: 'field'})
+    this._context = ContextManager.getContext({name: formName, source: 'field'}).context
   }
   render () {
-    return (
-      <this._context.Consumer>
-        {context => <Validator {...{...this._context._currentValue, ...this.props}} />}
-      </this._context.Consumer>
-    )
+    return (<Validator {...{...this._context, ...this.props}} />)
   }
 }
 
