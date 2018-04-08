@@ -5,32 +5,13 @@ import PropTypes from 'prop-types'
 class ValidatedFormField extends Component {
   componentWillMount () {
     const { formName } = this.props
-    this._context = ContextManager.getContext({name: formName, source: 'field'}).context
-  }
-  render () {
-    return (<Validator {...{...this._context, ...this.props}} />)
-  }
-}
-
-ValidatedFormField.propTypes = {
-  name: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['text', 'password', 'email', 'phone', 'select']).isRequired,
-  placeholder: PropTypes.string,
-  required: PropTypes.bool,
-  onChange: PropTypes.func,
-  onBlur: PropTypes.func,
-  validator: PropTypes.array,
-  options: PropTypes.array
-}
-
-export class Validator extends Component {
-  constructor () {
-    super()
     this.validate = this.validate.bind(this)
+    this._context = ContextManager.getContext({name: formName}).context
   }
 
   componentDidMount () {
-    const { registerField, name } = this.props
+    const { name } = this.props
+    const { registerField } = this._context
     registerField({
       name,
       validator: this.validate.bind(this),
@@ -39,7 +20,8 @@ export class Validator extends Component {
   }
 
   componentWillUnmount () {
-    const { unregisterField, name } = this.props
+    const { name } = this.props
+    const { unregisterField } = this._context
     unregisterField({name})
   }
 
@@ -56,6 +38,17 @@ export class Validator extends Component {
       <input type='text' ref={elem => (this.formElement = elem)} />
     )
   }
+}
+
+ValidatedFormField.propTypes = {
+  name: PropTypes.string.isRequired,
+  type: PropTypes.oneOf(['text', 'password', 'email', 'phone', 'select']).isRequired,
+  placeholder: PropTypes.string,
+  required: PropTypes.bool,
+  onChange: PropTypes.func,
+  onBlur: PropTypes.func,
+  validator: PropTypes.array,
+  options: PropTypes.array
 }
 
 export default ValidatedFormField
