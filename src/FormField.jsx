@@ -1,6 +1,7 @@
 import ContextManager from './ContextManager'
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import fieldValidator from 'validator'
 
 class ValidatedFormField extends Component {
   componentWillMount () {
@@ -26,7 +27,34 @@ class ValidatedFormField extends Component {
   }
 
   validate () {
+    const { validator, type, required } = this.props
+    const value = this.formElement.value
+    const isEmpty = () => value === ''
 
+    if (typeof validator === 'function') {
+      return validator(value)
+    }
+
+    if (!isEmpty() && type === 'email') {
+      const isValidEmail = fieldValidator.isEmail(value)
+      if (!isValidEmail) {
+        return 'Email is invalid'
+      }
+    }
+
+    if (isEmpty() && required) {
+      return 'This field is required'
+    }
+  }
+
+  onChangeHandler (e) {
+    const error = this.validate(e.target.value)
+    if (error) {
+      this.setState({isValid: false, errorMessage: error})
+    }
+    if (typeof this.props.onChange === 'function') {
+      this.props.onChange(e)
+    }
   }
 
   getValue () {
@@ -42,12 +70,12 @@ class ValidatedFormField extends Component {
 
 ValidatedFormField.propTypes = {
   name: PropTypes.string.isRequired,
-  type: PropTypes.oneOf(['text', 'password', 'email', 'phone', 'select']).isRequired,
+  type: PropTypes.oneOf(['text', 'password', 'email', 'select']).isRequired,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
   onChange: PropTypes.func,
   onBlur: PropTypes.func,
-  validator: PropTypes.array,
+  validator: PropTypes.func,
   options: PropTypes.array
 }
 

@@ -31,7 +31,7 @@ class ValidatedForm extends React.Component {
 
   validateAndSubmit () {
     const fields = Array.from(this._registeredFields)
-    let hasInvalidFields = fields.some(field => field[1].validator() === false)
+    let hasInvalidFields = fields.some(field => typeof field[1].validator() === 'string')
 
     if (hasInvalidFields) { throw new ErrFormFieldsInvalid() }
 
