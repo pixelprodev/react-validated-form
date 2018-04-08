@@ -3,14 +3,14 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 class ValidatedFormField extends Component {
-  constructor ({formName}) {
-    super()
-    this._context = ContextManager.getContext(formName)
+  componentWillMount () {
+    const { formName } = this.props
+    this._context = ContextManager.getContext({name: formName, source: 'field'})
   }
   render () {
     return (
       <this._context.Consumer>
-        {context => <Validator {...{...context, ...this.props}} />}
+        {context => <Validator {...{...this._context._currentValue, ...this.props}} />}
       </this._context.Consumer>
     )
   }
@@ -35,7 +35,11 @@ export class Validator extends Component {
 
   componentDidMount () {
     const { registerField, name } = this.props
-    registerField({name, validator: this.validate})
+    registerField({
+      name,
+      validator: this.validate.bind(this),
+      getValue: this.getValue.bind(this)
+    })
   }
 
   componentWillUnmount () {
@@ -53,7 +57,7 @@ export class Validator extends Component {
 
   render () {
     return (
-      <span>filler for validated input</span>
+      <input type='text' ref={elem => (this.formElement = elem)} />
     )
   }
 }

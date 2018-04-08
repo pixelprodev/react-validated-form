@@ -5,15 +5,15 @@ class ContextManager {
     this._contexts = []
   }
 
-  getContext (formName) {
-    if (formName) {
-      const ctxIndex = this._contexts.find(ctx => ctx.name === formName)
+  getContext ({name, source, ...defaultContext}) {
+    if (name) {
+      const ctxIndex = this._contexts.find(ctx => ctx.name === name)
       if (ctxIndex > -1) {
         return this._contexts[ctxIndex]
       } else {
         const newContext = {
-          name: formName,
-          ...React.createContext()
+          name,
+          ...React.createContext(defaultContext)
         }
         this._contexts.push(newContext)
         return newContext
