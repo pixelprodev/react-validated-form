@@ -5,14 +5,10 @@ class ContextManager {
 
   getContext ({name}) {
     if (name) {
-      const ctxIndex = this._contexts.find(ctx => ctx.name === name)
-      if (ctxIndex > -1) {
-        return this._contexts[ctxIndex]
-      }
+      const ctxIndex = this._contexts.findIndex(ctx => ctx.name === name)
+      if (ctxIndex > -1) { return this._contexts[ctxIndex] }
     } else {
-      if (this._contexts.length > 0) {
-        return this._contexts[0]
-      }
+      if (this._contexts.length > 0) { return this._contexts[0] }
     }
     return null
   }
