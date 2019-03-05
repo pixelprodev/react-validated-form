@@ -1,50 +1,36 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import ContextManager from './ContextManager'
-import ErrFormFieldsInvalid from './ErrFormFieldsInvalid'
+import React, { createContext, useState } from 'react'
 
-class ValidatedForm extends React.Component {
-  constructor ({name}) {
-    super()
-    this._registeredFields = new Map()
-  }
+export const FormContext = createContext()
 
-  componentWillMount () {
-    const { name } = this.props
-    const contextMethods = {
-      registerField: this.registerField.bind(this),
-      unregisterField: this.unregisterField.bind(this),
-      validateAndSubmit: this.validateAndSubmit.bind(this)
-    }
-    ContextManager.setContext({name, ...contextMethods})
-  }
+export function FormContextProvider({ onSubmit: submitForm }) {
+  const _registeredFields = new Map()
 
-  registerField ({name, validator, getValue}) {
-    if (!this._registeredFields.has(name)) {
-      this._registeredFields.set(name, {validator, getValue})
+  function registerField ({ name, validator, getValue }) {
+    if (!_registeredFields.has(name)) {
+      _registeredFields.set(name, { validator, getValue })
     }
   }
 
-  unregisterField ({name}) {
-    this._registeredFields.delete(name)
+  function unregisterField ({ name }) {
+    _registeredFields.delete(name)
   }
 
-  validateAndSubmit () {
-    const fields = Array.from(this._registeredFields)
-    let hasInvalidFields = fields.some(field => typeof field[1].validator() === 'string')
-
-    if (hasInvalidFields) { throw new ErrFormFieldsInvalid() }
-
-    const aggregatedValues = fields.map(field => ({[field[0]]: field[1].getValue()}))
-    this.props.onSubmit(aggregatedValues)
+  function validateAndSubmit () {
+    const fields = Array.from(_registeredFields)
+    let hasInvalidFields = fields.map(field => typeof field[1].validator() === 'string').filter(Boolean)
+    if (hasInvalidFields.length) { return }
+    const aggregatedValues = fields
+      .map(field => ({ [field[0]]: field[1].getValue() }))
+      .reduce((valueObj, property) => {
+        Object.keys(property).forEach(key => { valueObj[key] = property[key] })
+        return valueObj
+      })
+    submitForm(aggregatedValues)
   }
 
-  render () { return this.props.children }
+  return (
+    <FormContext.Provider value={{ registerField, unregisterField, validateAndSubmit }}>
+      { children }
+    </FormContext.Provider>
+  )
 }
-
-ValidatedForm.propTypes = {
-  name: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired
-}
-
-export default ValidatedForm
