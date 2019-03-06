@@ -1,0 +1,5 @@
+--require ./config/mocha/setup.js
+--ui tdd
+--slow 750
+--timeout 10000
+--recursive test/**/*.spec.js

@@ -4,7 +4,7 @@
   "description": "Form validation components for reactjs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "NODE_ENV=test mocha --opts config/mocha/mocha.opts",
     "storybook": "NODE_ENV=story start-storybook -p 9001 -c .storybook"
   },
   "repository": {
@@ -24,8 +24,10 @@
   "homepage": "https://github.com/pixelprodotco/react-validated-form#readme",
   "devDependencies": {
     "@babel/core": "^7.3.4",
+    "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
     "expect": "^24.1.0",
     "jsdom": "^13.2.0",
     "jsdom-global": "^3.0.2",
