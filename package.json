@@ -26,8 +26,14 @@
     "@babel/core": "^7.3.4",
     "@babel/preset-env": "^7.3.4",
     "@babel/preset-react": "^7.0.0",
+    "expect": "^24.1.0",
+    "jsdom": "^13.2.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "^6.0.2",
     "nanoid": "^2.0.1",
     "react": "^16.8.3",
+    "react-dom": "^16.8.4",
+    "react-testing-library": "^6.0.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3"
   }
