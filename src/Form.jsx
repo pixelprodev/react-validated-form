@@ -1,22 +1,30 @@
 import React, { createContext, useState } from 'react'
+import EventEmitter from 'event-emitter'
 
 export const FormContext = createContext()
 
-export function FormContextProvider({ onSubmit: submitForm }) {
+export default function Form({ onSubmit: submitForm, children }) {
   const _registeredFields = new Map()
+  const events = new EventEmitter()
 
-  function registerField ({ name, validator, getValue }) {
-    if (!_registeredFields.has(name)) {
-      _registeredFields.set(name, { validator, getValue })
+  function registerField ({ _id, ...params}) {
+    if (!_registeredFields.has(_id)) {
+      console.log(`registering field with form ${_id}`)
+      _registeredFields.set(_id, { ...params })
     }
   }
 
-  function unregisterField ({ name }) {
-    _registeredFields.delete(name)
+  function unregisterField ({ _id }) {
+    _registeredFields.delete(_id)
   }
 
   function validateAndSubmit () {
-    const fields = Array.from(_registeredFields)
+    console.log(_registeredFields)
+    const fields = Array.from(_registeredFields).filter(([fieldId, field]) => {
+      console.log(field)
+      console.log(field.getValue())
+      return (field.type === 'radio' && field.getValue()) || field.type !== 'radio'
+    })
     let hasInvalidFields = fields.map(field => typeof field[1].validator() === 'string').filter(Boolean)
     if (hasInvalidFields.length) { return }
     const aggregatedValues = fields
@@ -29,7 +37,7 @@ export function FormContextProvider({ onSubmit: submitForm }) {
   }
 
   return (
-    <FormContext.Provider value={{ registerField, unregisterField, validateAndSubmit }}>
+    <FormContext.Provider value={{ registerField, unregisterField, validateAndSubmit, events }}>
       { children }
     </FormContext.Provider>
   )
