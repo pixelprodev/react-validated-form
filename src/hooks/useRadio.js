@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react'
 
 export default function useRadio ({ input, events, setValue }) {
-  const [isChecked, setIsChecked] = useState(Boolean(input.props.defaultChecked))
-
+  const [isChecked, setIsChecked] = useState()
   // only fires on select
-  function onChange() {
+  function onClick() {
     setValue(input.props.value)
   }
 
   useEffect(() => {
     events.on('field:update', handleFieldUpdate)
     return () => events.off('field:update', handleFieldUpdate)
-  }, [])
+  })
 
   function handleFieldUpdate (data) {
     //short circuit if the field being updated is this one
@@ -22,13 +21,8 @@ export default function useRadio ({ input, events, setValue }) {
     }
   }
 
-  function getValue () {
-    console.log(`fetching value for ${_id}: ${isChecked}`)
-    return isChecked ? input.props.value : null
-  }
-
   return {
     validator: () => {},
-    inputProps: { onChange }
+    inputProps: { onClick }
   }
 }

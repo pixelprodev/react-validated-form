@@ -3,5 +3,5 @@ import { FormContext } from "./Form";
 
 export default function FormTrigger ({ children }) {
   const { validateAndSubmit } = useContext(FormContext)
-  return React.cloneElement(children, { onClick: validateAndSubmit })
+  return React.cloneElement(children, { onClick: validateAndSubmit, ['data-testid']: 'form-submit' })
 }

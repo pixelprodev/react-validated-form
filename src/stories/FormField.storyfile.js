@@ -12,11 +12,11 @@ storiesOf('FormField', module)
         <label>Foo</label>
       </FormField>
       <FormField>
-        <input type="text" name={'test-text'} />
-      </FormField>
-      <FormField>
         <input type="radio" name={'test-radio'} value={'bar'} />
         <label>Bar</label>
+      </FormField>
+      <FormField>
+        <input type="text" name={'test-text'} />
       </FormField>
       <FormTrigger>
         <button>Submit</button>

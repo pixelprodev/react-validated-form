@@ -19,20 +19,22 @@ export default function Form({ onSubmit: submitForm, children }) {
   }
 
   function validateAndSubmit () {
-    console.log(_registeredFields)
-    const fields = Array.from(_registeredFields).filter(([fieldId, field]) => {
-      console.log(field)
-      console.log(field.getValue())
-      return (field.type === 'radio' && field.getValue()) || field.type !== 'radio'
-    })
-    let hasInvalidFields = fields.map(field => typeof field[1].validator() === 'string').filter(Boolean)
-    if (hasInvalidFields.length) { return }
-    const aggregatedValues = fields
-      .map(field => ({ [field[0]]: field[1].getValue() }))
-      .reduce((valueObj, property) => {
-        Object.keys(property).forEach(key => { valueObj[key] = property[key] })
-        return valueObj
-      })
+    // console.log(_registeredFields)
+    // const fields = Array.from(_registeredFields).filter(([fieldId, field]) => {
+    //   console.log(field)
+    //   console.log(field.getValue())
+    //   return (field.type === 'radio' && field.getValue()) || field.type !== 'radio'
+    // })
+    // let hasInvalidFields = fields.map(([fieldId, field]) => typeof field.validator() === 'string').filter(Boolean)
+    // if (hasInvalidFields.length) { return }
+    // const aggregatedValues = fields
+    //   .map(([fieldId, field]) => ({ [field.name]: field.getValue() }))
+    //   .reduce((valueObj, property) => {
+    //     Object.keys(property).forEach(key => { valueObj[key] = property[key] })
+    //     return valueObj
+    //   })
+    // submitForm(aggregatedValues)
+    const aggregatedValues = ['foo', 'bar', 'baz']
     submitForm(aggregatedValues)
   }
 
