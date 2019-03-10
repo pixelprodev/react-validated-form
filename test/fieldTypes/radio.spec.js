@@ -77,4 +77,28 @@ suite('Type: Radio', () => {
     expect(secondResult.length).toBe(1)
     expect(secondResult).toInclude({'test-radio': 'foo'})
   })
+
+  test('Multiple radios in the same form', async () => {
+    const submitSpy = expect.createSpy()
+    function TestForm () {
+      return (
+        <Form onSubmit={submitSpy}>
+          <FormField input={ <input type='radio' name='test-radio' data-testid='foo' value='foo' defaultChecked /> } />
+          <FormField input={ <input type='radio' name='test-radio' data-testid='bar' value='bar'/> } />
+          <FormField input={ <input type='radio' name='test-radio2' data-testid='foo2' value='foo' /> } />
+          <FormField input={ <input type='radio' name='test-radio2' data-testid='bar2' value='bar' defaultChecked /> } />
+          <FormTrigger>
+            <button type='button'>Submit</button>
+          </FormTrigger>
+        </Form>
+      )
+    }
+    const { getByTestId } = render(<TestForm />)
+    fireEvent.click(getByTestId('form-submit'))
+
+    const returnValue = submitSpy.calls[0].arguments[0]
+    expect(returnValue.length).toBe(2)
+    expect(returnValue).toEqual([{'test-radio': 'foo'}, {'test-radio2': 'bar'}])
+  })
 })
+
