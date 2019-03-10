@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react'
 
-export default function useRadio ({ input, events, setValue }) {
-  const [isChecked, setIsChecked] = useState()
-  // only fires on select
-  function onClick() {
-    setValue(input.props.value)
+export default function useRadio ({ input, events }) {
+  const [isChecked, setIsChecked] = useState(input.props.defaultChecked || input.props.checked)
+  
+  function onClick(e) {
+    setIsChecked(true)
+    events.emit('field:update', { name: input.props.name, value: input.props.value })
+    if (typeof input.props.onClick === 'function') {
+      input.props.onClick(e)
+    }
   }
 
   useEffect(() => {
@@ -13,16 +17,16 @@ export default function useRadio ({ input, events, setValue }) {
   })
 
   function handleFieldUpdate (data) {
+    const { name, value } = input.props
     //short circuit if the field being updated is this one
-    if (data._id === _id) { return }
+    if (data.name === name && data.value === value) { return }
     // if another radio with the same name changes, set this as unchecked
-    if (data.name === name) {
-      setIsChecked(false)
-    }
+    setIsChecked(false)
   }
 
-  return {
-    validator: () => {},
-    inputProps: { onClick }
+  function getValue() {
+    return isChecked ? input.props.value : null
   }
+
+  return { getValue, onClick, checked: isChecked }
 }

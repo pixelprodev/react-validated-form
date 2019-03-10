@@ -11,12 +11,8 @@ suite('Type: Radio', () => {
     function TestForm () {
       return (
         <Form onSubmit={submitSpy}>
-          <FormField>
-            <input type='radio' name='test-radio' value='foo' defaultChecked/>
-          </FormField>
-          <FormField>
-            <input type='radio' name='test-radio' value='bar' />
-          </FormField>
+          <FormField input={ <input type='radio' name='test-radio' value='foo' defaultChecked /> } />
+          <FormField input={ <input type='radio' name='test-radio' value='bar' /> } />
           <FormTrigger>
             <button type='button'>Submit</button>
           </FormTrigger>
@@ -32,7 +28,53 @@ suite('Type: Radio', () => {
     expect(returnValue).toInclude({'test-radio': 'foo'})
   })
 
-  test('Selecting a different radio value updates the reported value')
-  test('Defaults to first input as initial value')
-  test('Respects `defaultChecked` property to override initial value')
+  test('Selecting a different radio value updates the reported value', async () => {
+    const submitSpy = expect.createSpy()
+    function TestForm () {
+      return (
+        <Form onSubmit={submitSpy}>
+          <FormField input={ <input type='radio' name='test-radio' data-testid='foo' value='foo' defaultChecked/> } />
+          <FormField input={ <input type='radio' name='test-radio' data-testid='bar' value='bar'/> } />
+          <FormTrigger>
+            <button type='button'>Submit</button>
+          </FormTrigger>
+        </Form>
+      )
+    }
+    const { getByTestId } = render(<TestForm />)
+    fireEvent.click(getByTestId('bar'))
+    fireEvent.click(getByTestId('form-submit'))
+
+    const returnValue = submitSpy.calls[0].arguments[0]
+    expect(returnValue.length).toBe(1)
+    expect(returnValue).toInclude({'test-radio': 'bar'})
+  })
+
+  test('Reselecting default option activates appropriate radio', async () => {
+    const submitSpy = expect.createSpy()
+    function TestForm () {
+      return (
+        <Form onSubmit={submitSpy}>
+          <FormField input={ <input type='radio' name='test-radio' data-testid='foo' value='foo' defaultChecked/> } />
+          <FormField input={ <input type='radio' name='test-radio' data-testid='bar' value='bar'/> } />
+          <FormTrigger>
+            <button type='button'>Submit</button>
+          </FormTrigger>
+        </Form>
+      )
+    }
+    const { getByTestId } = render(<TestForm />)
+    fireEvent.click(getByTestId('bar'))
+    fireEvent.click(getByTestId('form-submit'))
+    fireEvent.click(getByTestId('foo'))
+    fireEvent.click(getByTestId('form-submit'))
+
+    const firstResult = submitSpy.calls[0].arguments[0]
+    expect(firstResult.length).toBe(1)
+    expect(firstResult).toInclude({'test-radio': 'bar'})
+
+    const secondResult = submitSpy.calls[1].arguments[0]
+    expect(secondResult.length).toBe(1)
+    expect(secondResult).toInclude({'test-radio': 'foo'})
+  })
 })

@@ -7,17 +7,12 @@ import FormTrigger from "../FormTrigger";
 storiesOf('FormField', module)
   .add('test', () =>
     <Form onSubmit={(values) => {console.log(values)}}>
-      <FormField>
+      <FormField input={
         <input type="radio" name={'test-radio'} value={'foo'} defaultChecked/>
-        <label>Foo</label>
-      </FormField>
-      <FormField>
+      } />
+      <FormField input={
         <input type="radio" name={'test-radio'} value={'bar'} />
-        <label>Bar</label>
-      </FormField>
-      <FormField>
-        <input type="text" name={'test-text'} />
-      </FormField>
+     } />
       <FormTrigger>
         <button>Submit</button>
       </FormTrigger>
