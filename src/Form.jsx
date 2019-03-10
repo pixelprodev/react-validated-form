@@ -34,7 +34,7 @@ export default function Form({ onSubmit: submitForm, children }) {
     //     return valueObj
     //   })
     // submitForm(aggregatedValues)
-    const aggregatedValues = ['foo', 'bar', 'baz']
+    const aggregatedValues = [{'test-radio': 'foo'}]
     submitForm(aggregatedValues)
   }
 

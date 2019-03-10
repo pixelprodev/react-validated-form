@@ -3,12 +3,10 @@ import { render, fireEvent, cleanup, waitForElement } from 'react-testing-librar
 import Form from '../../src/Form'
 import FormField from '../../src/FormField'
 import FormTrigger from '../../src/FormTrigger'
-import { spy } from 'sinon'
 
 suite('Type: Radio', () => {
-  teardown(cleanup)
-  test('Selecting a different radio value updates the reported value', async () => {
-    const submitSpy = spy()
+  test('Reports only one value for multiple radios with the same name', async () => {
+    const submitSpy = expect.createSpy()
     function TestForm () {
       return (
         <Form onSubmit={submitSpy}>
@@ -25,10 +23,16 @@ suite('Type: Radio', () => {
       )
     }
 
-    const { getByTestId, container } = render(<TestForm />)
+    const { getByTestId } = render(<TestForm />)
     fireEvent.click(getByTestId('form-submit'))
 
+    const returnValue = submitSpy.calls[0].arguments[0]
+    expect(returnValue.length).toBe(1)
+    expect(returnValue).toInclude({'test-radio': 'foo'})
   })
+
+  teardown(cleanup)
+  test('Selecting a different radio value updates the reported value')
   test('Defaults to first input as initial value')
-  test('Respects `checked` property to override initial value')
+  test('Respects `defaultChecked` property to override initial value')
 })
