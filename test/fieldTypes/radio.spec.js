@@ -1,20 +1,21 @@
 import React from 'react'
-import { render, fireEvent, cleanup, waitForElement } from 'react-testing-library'
+import { render, fireEvent, cleanup } from 'react-testing-library'
 import Form from '../../src/Form'
 import FormField from '../../src/FormField'
 import FormTrigger from '../../src/FormTrigger'
 
 suite('Type: Radio', () => {
+  teardown(cleanup)
   test('Reports only one value for multiple radios with the same name', async () => {
     const submitSpy = expect.createSpy()
     function TestForm () {
       return (
         <Form onSubmit={submitSpy}>
           <FormField>
-            <input type="radio" name={'test-radio'} value={'foo'} defaultChecked/>
+            <input type='radio' name='test-radio' value='foo' defaultChecked/>
           </FormField>
           <FormField>
-            <input type="radio" name={'test-radio'} value={'bar'} />
+            <input type='radio' name='test-radio' value='bar' />
           </FormField>
           <FormTrigger>
             <button type='button'>Submit</button>
@@ -31,7 +32,6 @@ suite('Type: Radio', () => {
     expect(returnValue).toInclude({'test-radio': 'foo'})
   })
 
-  teardown(cleanup)
   test('Selecting a different radio value updates the reported value')
   test('Defaults to first input as initial value')
   test('Respects `defaultChecked` property to override initial value')
