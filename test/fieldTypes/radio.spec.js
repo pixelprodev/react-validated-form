@@ -23,7 +23,7 @@ suite('Type: Radio', () => {
     const { getByTestId } = render(<TestForm />)
     fireEvent.click(getByTestId('form-submit'))
 
-    const returnValue = submitSpy.calls[0].arguments[0]
+    const returnValue = submitSpy.calls[0].arguments
     expect(returnValue.length).toBe(1)
     expect(returnValue).toInclude({'test-radio': 'foo'})
   })
@@ -45,7 +45,7 @@ suite('Type: Radio', () => {
     fireEvent.click(getByTestId('bar'))
     fireEvent.click(getByTestId('form-submit'))
 
-    const returnValue = submitSpy.calls[0].arguments[0]
+    const returnValue = submitSpy.calls[0].arguments
     expect(returnValue.length).toBe(1)
     expect(returnValue).toInclude({'test-radio': 'bar'})
   })
@@ -69,11 +69,11 @@ suite('Type: Radio', () => {
     fireEvent.click(getByTestId('foo'))
     fireEvent.click(getByTestId('form-submit'))
 
-    const firstResult = submitSpy.calls[0].arguments[0]
+    const firstResult = submitSpy.calls[0].arguments
     expect(firstResult.length).toBe(1)
     expect(firstResult).toInclude({'test-radio': 'bar'})
 
-    const secondResult = submitSpy.calls[1].arguments[0]
+    const secondResult = submitSpy.calls[1].arguments
     expect(secondResult.length).toBe(1)
     expect(secondResult).toInclude({'test-radio': 'foo'})
   })
@@ -96,9 +96,9 @@ suite('Type: Radio', () => {
     const { getByTestId } = render(<TestForm />)
     fireEvent.click(getByTestId('form-submit'))
 
-    const returnValue = submitSpy.calls[0].arguments[0]
-    expect(returnValue.length).toBe(2)
-    expect(returnValue).toEqual([{'test-radio': 'foo'}, {'test-radio2': 'bar'}])
+    const returnValue = submitSpy.calls[0].arguments.shift()
+    expect(Object.values(returnValue).length).toBe(2)
+    expect(returnValue).toEqual({'test-radio': 'foo', 'test-radio2': 'bar'})
   })
 })
 

@@ -23,7 +23,12 @@ export default function Form({ onSubmit: submitForm, children }) {
     })
     const hasInvalidFields = fields.map(([fieldId, field]) => typeof field.validator() === 'string').filter(Boolean)
     if (hasInvalidFields.length) { return }
-    const aggregatedValues = fields.map(([fieldId, field]) => ({ [field.name]: field.getValue() }))
+    const aggregatedValues = fields
+      .map(([fieldId, field]) => ({ [field.name]: field.getValue() }))
+      .reduce((valueObj, property) => {
+        Object.keys(property).forEach(key => { valueObj[key] = property[key] })
+        return valueObj
+      })
     submitForm(aggregatedValues)
   }
 

@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 
-export default function useInput ({ setValue }) {
+export default function useInput ({ input }) {
+  const [value, setValue] = useState(input.props.value || input.props.initialValue || '')
 
-  // only fires on select
+  function getValue () {
+    return value
+  }
+
   function onChange(e) {
     setValue(e.target.value)
   }
 
-  return {
-    validator: () => {},
-    inputProps: { onChange }
-  }
+  return { getValue, onChange, value }
 }

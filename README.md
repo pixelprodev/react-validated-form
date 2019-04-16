@@ -9,15 +9,15 @@ The components are linked through a simple context manager (not to be confused w
 ## Install
 
 ```sh
-npm install --save @pixelprodotco/react-validated-form
+npm install --save @pixelprodev/react-validated-form
 ```
-Be sure to prefix with `@pixelprodotco/` when you npm install, or youll install a different library alltogether.
+Be sure to prefix with `@pixelprodev/` when you npm install, or youll install a different library alltogether.
 
 ## Simple Usage Example
 
 ```js
 import React from 'react'
-import { Form, FormField, FormSubmit } from '@pixelprodotco/react-validated-form'
+import { Form, FormField, FormSubmit } from '@pixelprodev/react-validated-form'
 
 const MyReactFormComponent = () => 
   <Form name='myForm' onSubmit={doSubmitFunc}>
@@ -36,7 +36,7 @@ const MyReactFormComponent = () =>
 
 ### Form
 ```js
-import { Form } from '@pixelprodotco/react-validated-form'
+import { Form } from '@pixelprodev/react-validated-form'
 
 // Base Form
 <Form name='testForm' onSubmit={mySubmitFunc}>
@@ -58,7 +58,7 @@ import { Form } from '@pixelprodotco/react-validated-form'
 ### FormField
 
 ```js
-import { FormField } from '@pixelprodotco/react-validated-form'
+import { FormField } from '@pixelprodev/react-validated-form'
 
 // Text input (required)
   <FormField type='text'
@@ -99,7 +99,7 @@ If you would like to add more fine-tuning to your validation, provide a function
 |options|Array|Only valid when type === 'select', renders each option for the select component.  Example:`[{label: 'foo', value: 'f'}]`
 ### FormSubmit
 ```js
-import { FormSubmit } from '@pixelprodotco/react-validated-form'
+import { FormSubmit } from '@pixelprodev/react-validated-form'
 
 // Trigger to submit form
 const SubmitButton = () => 
