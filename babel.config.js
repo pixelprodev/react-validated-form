@@ -3,11 +3,13 @@ module.exports = function (api) {
   const presets = [
     '@babel/preset-react',
     ['@babel/preset-env', {
-      modules: false,
       targets: {
-        browsers: ['last 2 versions', 'ie 11']
+        "node": "current"
       }
     }]
+  ]
+  const plugins = [
+    "@babel/plugin-proposal-export-default-from"
   ]
   const env = {
     test: {
@@ -19,5 +21,5 @@ module.exports = function (api) {
     }
   }
 
-  return ({ presets, env })
+  return ({ presets, plugins, env })
 }
