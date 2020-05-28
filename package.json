@@ -1,12 +1,14 @@
 {
   "name": "@pixelprodev/react-validated-form",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Form validation components for reactjs",
   "main": "lib/index.js",
+  "private": false,
   "scripts": {
     "test": "NODE_ENV=test mocha --opts config/mocha/mocha.opts",
     "storybook": "NODE_ENV=story start-storybook -p 9001 -c .storybook",
-    "build": "babel src --out-dir lib --watch"
+    "build": "babel src --out-dir lib",
+    "prepublish": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -17,12 +19,19 @@
     "forms",
     "validation"
   ],
+  "files": [
+    "lib"
+  ],
   "author": "james leclair <james@pixelpro.dev>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/pixelprodev/react-validated-form/issues"
   },
   "homepage": "https://github.com/pixelprodev/react-validated-form#readme",
+  "dependencies": {
+    "event-emitter": "^0.3.5",
+    "nanoid": "^2.0.1"
+  },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.3.4",
@@ -34,12 +43,10 @@
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
     "@storybook/react": "^5.0.8",
-    "event-emitter": "^0.3.5",
     "expect": "^1.20.2",
     "jsdom": "^13.2.0",
     "jsdom-global": "^3.0.2",
     "mocha": "^6.2.0",
-    "nanoid": "^2.0.1",
     "react": "^16.8.3",
     "react-dom": "^16.8.4",
     "react-test-renderer": "^16.8.4",
