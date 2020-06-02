@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
-export default function useInput () {
-  const [value, setValue] = useState([])
+export default function useFileInput () {
+  const [value, setValue] = useState([{}])
 
   function getValue () {
     return value
@@ -11,5 +11,5 @@ export default function useInput () {
     setValue(e.target.files)
   }
 
-  return { getValue, onChange, value }
+  return { getValue, onChange, filename: value[0].filename }
 }
