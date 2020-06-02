@@ -1,5 +1,6 @@
 import useRadio from './useRadio'
 import useInput from './useInput'
+import useFileInput from './useFileInput'
 
 export default function useInputHook ({ input, events }) {
   if (input.type === 'textarea') {
@@ -13,6 +14,8 @@ export default function useInputHook ({ input, events }) {
     case 'number':
     case 'password':
       return useInput({ input, events })
+    case 'file':
+      return useFileInput({ input, events })
     default:
       throw new Error(`No matching hook found for component type ${input.props.type}`)
   }
