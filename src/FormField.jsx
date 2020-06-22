@@ -5,7 +5,7 @@ import useInputHook from './hooks'
 
 export default function FormField ({ input, validator = () => {} }) {
   let _id = nanoId(6)
-  const { registerField, unregisterField, events } = useContext(FormContext)
+  const { registerField, unregisterField, events, holdForSubmit } = useContext(FormContext)
   const { getValue, ...handlers } = useInputHook({ input, events })
 
   useEffect(() => {
@@ -14,5 +14,5 @@ export default function FormField ({ input, validator = () => {} }) {
     return () => unregisterField({ _id })
   })
 
-  return React.cloneElement(input, {...handlers})
+  return React.cloneElement(input, {...handlers, disabled: holdForSubmit})
 }

@@ -3,7 +3,7 @@ import EventEmitter from 'event-emitter'
 
 export const FormContext = createContext()
 
-export default function Form({ onSubmit: submitForm, children }) {
+export default function Form({ onSubmit: submitForm, holdForSubmit = false, children }) {
   const _registeredFields = new Map()
   const events = new EventEmitter()
 
@@ -33,7 +33,7 @@ export default function Form({ onSubmit: submitForm, children }) {
   }
 
   return (
-    <FormContext.Provider value={{ registerField, unregisterField, validateAndSubmit, events }}>
+    <FormContext.Provider value={{ registerField, unregisterField, validateAndSubmit, events, holdForSubmit }}>
       { children }
     </FormContext.Provider>
   )
