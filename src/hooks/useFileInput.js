@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-export default function useFileInput () {
+export default function useFileInput ({ validator }) {
   const [value, setValue] = useState([{}])
 
   function getValue () {
@@ -11,5 +11,5 @@ export default function useFileInput () {
     setValue(e.target.files)
   }
 
-  return { getValue, onChange, filename: value[0].filename }
+  return { getValue, onChange, filename: value[0].filename, validate: validator }
 }
