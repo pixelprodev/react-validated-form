@@ -20,8 +20,8 @@ suite('Type: Radio', () => {
       )
     }
 
-    const { getByTestId } = render(<TestForm />)
-    fireEvent.click(getByTestId('form-submit'))
+    const { container } = render(<TestForm />)
+    fireEvent.click(container.getElementsByTagName('button')[0])
 
     const returnValue = submitSpy.calls[0].arguments
     expect(returnValue.length).toBe(1)
@@ -41,9 +41,9 @@ suite('Type: Radio', () => {
         </Form>
       )
     }
-    const { getByTestId } = render(<TestForm />)
+    const { container, getByTestId } = render(<TestForm />)
     fireEvent.click(getByTestId('bar'))
-    fireEvent.click(getByTestId('form-submit'))
+    fireEvent.click(container.getElementsByTagName('button')[0])
 
     const returnValue = submitSpy.calls[0].arguments
     expect(returnValue.length).toBe(1)
@@ -63,11 +63,11 @@ suite('Type: Radio', () => {
         </Form>
       )
     }
-    const { getByTestId } = render(<TestForm />)
+    const { container, getByTestId } = render(<TestForm />)
     fireEvent.click(getByTestId('bar'))
-    fireEvent.click(getByTestId('form-submit'))
+    fireEvent.click(container.getElementsByTagName('button')[0])
     fireEvent.click(getByTestId('foo'))
-    fireEvent.click(getByTestId('form-submit'))
+    fireEvent.click(container.getElementsByTagName('button')[0])
 
     const firstResult = submitSpy.calls[0].arguments
     expect(firstResult.length).toBe(1)
@@ -93,8 +93,8 @@ suite('Type: Radio', () => {
         </Form>
       )
     }
-    const { getByTestId } = render(<TestForm />)
-    fireEvent.click(getByTestId('form-submit'))
+    const { container } = render(<TestForm />)
+    fireEvent.click(container.getElementsByTagName('button')[0])
 
     const returnValue = submitSpy.calls[0].arguments.shift()
     expect(Object.values(returnValue).length).toBe(2)

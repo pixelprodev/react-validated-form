@@ -20,8 +20,8 @@ suite('Type: text', () => {
       )
     }
 
-    const { getByTestId } = render(<TestForm />)
-    fireEvent.click(getByTestId('form-submit'))
+    const { container } = render(<TestForm />)
+    fireEvent.click(container.getElementsByTagName('button')[0])
 
     const returnValue = submitSpy.calls[0].arguments
     expect(returnValue.length).toBe(1)
@@ -47,12 +47,51 @@ suite('Type: text', () => {
       )
     }
 
-    const { getByTestId } = render(<TestForm />)
-    fireEvent.click(getByTestId('form-submit'))
+    const { container } = render(<TestForm />)
+    fireEvent.click(container.getElementsByTagName('button')[0])
 
     const returnValue = submitSpy.calls[0].arguments
     expect(returnValue.length).toBe(1)
     expect(returnValue).toInclude({'test-text-input': 'test1'})
+  })
+  test('Disables inputs when form is holdForSubmit', async () => {
+    function TestForm () {
+      return (
+        <Form holdForSubmit onSubmit={() => {}}>
+          <FormField input={ <input type='text' name='test-text-input' value='test1' /> } />
+          <FormField input={ <input type='text' name='test-text-input2' value='test2' /> } />
+          <FormTrigger>
+            <button type='button'>Submit</button>
+          </FormTrigger>
+        </Form>
+      )
+    }
+
+    const { container } = render(<TestForm />)
+    const inputs = container.getElementsByTagName('input')
+    expect(inputs[0].disabled).toBe(true)
+    expect(inputs[1].disabled).toBe(true)
+    const buttons = container.getElementsByTagName('button')
+    expect(buttons[0].disabled).toBe(true)
+  })
+
+  it('throws a validation error when you try to submit a blank required formField', async () => {
+    const submitSpy = expect.createSpy()
+
+    function TestForm () {
+      return (
+        <Form onSubmit={submitSpy}>
+          <FormField input={ <input type='text' name='test-text-input' required /> } />
+          <FormTrigger>
+            <button type='button'>Submit</button>
+          </FormTrigger>
+        </Form>
+      )
+    }
+
+    const { container } = render(<TestForm />)
+    fireEvent.click(container.getElementsByTagName('button')[0])
+    expect(submitSpy.calls.length).toBe(0)
   })
 })
 

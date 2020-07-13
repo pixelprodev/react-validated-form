@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-export default function useRadio ({ input, events }) {
+export default function useRadio ({ input, events, validator }) {
   const [isChecked, setIsChecked] = useState(input.props.defaultChecked || input.props.checked)
   const { name, value } = input.props
 
@@ -30,5 +30,5 @@ export default function useRadio ({ input, events }) {
     return isChecked ? value : null
   }
 
-  return { getValue, onChange, checked: isChecked }
+  return { getValue, onChange, checked: isChecked, validate: validator }
 }
