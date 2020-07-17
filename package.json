@@ -22,6 +22,9 @@
   "files": [
     "lib"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "james leclair <james@pixelpro.dev>",
   "license": "ISC",
   "bugs": {
