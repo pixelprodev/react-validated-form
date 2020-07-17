@@ -75,7 +75,7 @@ suite('Type: text', () => {
     expect(buttons[0].disabled).toBe(true)
   })
 
-  it('throws a validation error when you try to submit a blank required formField', async () => {
+  test('throws a validation error when you try to submit a blank required formField', async () => {
     const submitSpy = expect.createSpy()
 
     function TestForm () {
