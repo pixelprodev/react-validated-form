@@ -14,7 +14,7 @@ export default function FormField ({ input, required, validator = () => {}, erro
     return () => unregisterField({ _id })
   })
 
-  const props = {...handlers, disabled: holdForSubmit}
+  const props = {...handlers, errorMessage, disabled: holdForSubmit}
   if (errorMessageProp) {
     props[errorMessageProp] = errorMessage
   }
